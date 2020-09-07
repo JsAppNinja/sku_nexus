@@ -11,9 +11,9 @@ const initialState = {};
 const store = configureStore(initialState, history);
 
 export default () => (
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <App />
-    </ConnectedRouter>
-  </Provider>
+    <Provider store={store}>
+        <ConnectedRouter history={history}>
+            <App />
+        </ConnectedRouter>
+    </Provider>
 );
