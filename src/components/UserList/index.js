@@ -4,7 +4,7 @@ import './styles.css';
 
 const UserList = ({ users }) => {
     return (
-        <div className="card-list">
+        <div className="user-list">
             {users.map((user) => (
                 <UserItem key={user.id} user={user} />
             ))}

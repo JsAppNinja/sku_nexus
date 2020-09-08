@@ -3,11 +3,17 @@ import './styles.css';
 
 const UserItem = (props) => (
     <div className="card-container">
-        <h3>{props.user.first_name}</h3>
-        <h3>{props.user.last_name}</h3>
-        <p>{props.user.email}</p>
-        <p>{props.user.cc_number}</p>
-        <p>{props.user.cc_type}</p>
+        <section>
+            <h3>{props.user.first_name}</h3>
+            <h3>{props.user.last_name}</h3>
+        </section>
+        <section>
+            <p>{props.user.email}</p>
+        </section>
+        <section>
+            <p>{props.user.cc_number}</p>
+            <p>{props.user.cc_type}</p>
+        </section>
         <button>
             <a
                 href={`/user/${props.user.cc_number}`}

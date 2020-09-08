@@ -50,7 +50,7 @@ const UsersGrid = () => {
                     >
                         <Grid item xs={12}>
                             <SearchBox
-                                placeholder="search users"
+                                placeholder="Search by CC number"
                                 handleChange={searchUsers}
                             />
                         </Grid>

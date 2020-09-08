@@ -2,7 +2,7 @@ import React from 'react';
 import './styles.css';
 
 const SearchBox = ({ placeholder, handleChange }) => (
-    <div>
+    <div className="search-box">
         <input
             className="search"
             type="search"
