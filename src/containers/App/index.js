@@ -5,7 +5,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import routes from './routes';
 
-import 'styles/containers/app.css';
+import 'styles/app.css';
 
 const theme = createMuiTheme({ typography: { useNextVariants: true } });
 

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as toastrReducer } from 'react-redux-toastr';
 
-import globalReducer from 'containers/App/reducer';
+import globalReducer from 'redux/reducer';
 
 export default function createReducer(injectedReducers = {}) {
     const rootReducer = combineReducers({

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import UserManagement from 'containers/UserManagement';
+import UsersGrid from 'containers/UsersGrid';
 
 const ControlledRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={(props) => <Component {...props} />} />
@@ -8,7 +8,7 @@ const ControlledRoute = ({ component: Component, ...rest }) => (
 
 const routes = () => (
     <Switch>
-        <ControlledRoute path="/" component={UserManagement} />
+        <ControlledRoute path="/" component={UsersGrid} />
     </Switch>
 );
 
