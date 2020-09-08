@@ -27,7 +27,8 @@ function appReducer(state = initialState, action) {
             if (state.users && state.users.length > 0) {
                 return state;
             } else {
-                return {
+                const storage = localStorage.getItem('users');
+                const newState = {
                     ...state,
                     users: DummyData.map((user) => {
                         const products = [];
@@ -35,7 +36,15 @@ function appReducer(state = initialState, action) {
                         return newUser;
                     }),
                 };
+                if (!storage) return newState;
+                if (JSON.parse(storage)) {
+                    return {
+                        ...newState,
+                        users: JSON.parse(storage),
+                    };
+                }
             }
+            break;
         case CONSTANTS.SEARCH_USER: {
             const searchedData = [];
             if (state.users && state.users.length > 0) {
@@ -70,18 +79,20 @@ function appReducer(state = initialState, action) {
                 name: action.name,
                 cost: action.cost,
             };
+            const newUsers = state.users.map((user) => {
+                if (user.cc_number === state.user.cc_number) {
+                    return {
+                        ...user,
+                        cost: user.cost + action.cost,
+                        products: [...user.products, newProduct],
+                    };
+                }
+                return user;
+            });
+            localStorage.setItem('users', JSON.stringify(newUsers));
             return {
                 ...state,
-                users: state.users.map((user) => {
-                    if (user.cc_number === state.user.cc_number) {
-                        return {
-                            ...user,
-                            cost: user.cost + action.cost,
-                            products: [...user.products, newProduct],
-                        };
-                    }
-                    return user;
-                }),
+                users: newUsers,
                 user: {
                     ...state.user,
                     cost: state.user.cost + action.cost,
@@ -104,18 +115,20 @@ function appReducer(state = initialState, action) {
             newProducts.forEach((item) => {
                 userCost += item.cost;
             });
+            const newUsers = state.users.map((user) => {
+                if (user.cc_number === state.user.cc_number) {
+                    return {
+                        ...user,
+                        cost: userCost,
+                        products: newProducts,
+                    };
+                }
+                return user;
+            });
+            localStorage.setItem('users', JSON.stringify(newUsers));
             return {
                 ...state,
-                users: state.users.map((user) => {
-                    if (user.cc_number === state.user.cc_number) {
-                        return {
-                            ...user,
-                            cost: userCost,
-                            products: newProducts,
-                        };
-                    }
-                    return user;
-                }),
+                users: newUsers,
                 user: {
                     ...state.user,
                     products: newProducts,
@@ -132,19 +145,20 @@ function appReducer(state = initialState, action) {
                     userCost += item.cost;
                 }
             });
-
+            const newUsers = state.users.map((user) => {
+                if (user.cc_number === state.user.cc_number) {
+                    return {
+                        ...user,
+                        cost: userCost,
+                        products: newProducts,
+                    };
+                }
+                return user;
+            });
+            localStorage.setItem('users', JSON.stringify(newUsers));
             return {
                 ...state,
-                users: state.users.map((user) => {
-                    if (user.cc_number === state.user.cc_number) {
-                        return {
-                            ...user,
-                            cost: userCost,
-                            products: newProducts,
-                        };
-                    }
-                    return user;
-                }),
+                users: newUsers,
                 user: {
                     ...state.user,
                     products: newProducts,
