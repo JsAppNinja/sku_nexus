@@ -2,7 +2,7 @@ import * as CONSTANTS from './constants';
 import DummyData from 'data/dummyData';
 
 const initialState = {
-    users: DummyData,
+    userList: DummyData,
     user: {
         firstName: '',
         lastName: '',
@@ -15,16 +15,16 @@ const initialState = {
 };
 
 function appReducer(state = initialState, action) {
+    console.log('==', state.userList, action.type);
     switch (action.type) {
         case CONSTANTS.GET_USER_DATA:
             return {
                 ...state,
             };
-        default:
-            return state;
         case CONSTANTS.GET_ALL_USERS:
             return {
                 ...state,
+                userList: DummyData,
             };
         case CONSTANTS.SEARCH_USER: {
             const searchedData = [];
@@ -35,7 +35,7 @@ function appReducer(state = initialState, action) {
             });
             return {
                 ...state,
-                users: searchedData,
+                userList: searchedData,
             };
         }
         case CONSTANTS.GET_USER: {

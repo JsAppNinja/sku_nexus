@@ -2,18 +2,18 @@ import '@babel/polyfill';
 
 import React from 'react';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+import { Router } from 'react-router-dom';
 import history from 'utils/history';
 
 import App from 'containers/App';
 import configureStore from './configureStore';
-const initialState = {};
-const store = configureStore(initialState, history);
+
+const store = configureStore();
 
 export default () => (
     <Provider store={store}>
-        <ConnectedRouter history={history}>
+        <Router history={history}>
             <App />
-        </ConnectedRouter>
+        </Router>
     </Provider>
 );

@@ -2,10 +2,10 @@ import React from 'react';
 import Card from 'components/Card';
 import './styles.css';
 
-const CardList = (props) => {
+const CardList = ({ users }) => {
     return (
         <div className="card-list">
-            {props.users.map((user) => (
+            {users.map((user) => (
                 <Card key={user.id} user={user} />
             ))}
         </div>

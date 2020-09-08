@@ -1,4 +1,4 @@
-const dummyData = [
+export default [
     {
         id: 1,
         first_name: 'Ardyth',
@@ -180,5 +180,3 @@ const dummyData = [
         currency: 'Yuan Renminbi',
     },
 ];
-
-export default dummyData;

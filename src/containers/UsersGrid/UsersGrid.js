@@ -1,0 +1,45 @@
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import actions from 'containers/App/actions';
+import CardList from 'components/CardList';
+import SearchBox from 'components/SearchBox';
+
+import './styles.css';
+
+const UsersGrid = () => {
+    const [mount, setMount] = useState(false);
+    const users = useSelector((state) => state.global.userList);
+    const dispatch = useDispatch();
+
+    const fetchUsers = () => {
+        dispatch(actions.getAllUsers());
+    };
+
+    const searchUsers = (e) => {
+        const ccNumber = e.target.value;
+
+        if (ccNumber === '') {
+            dispatch(actions.getAllUsers());
+        } else {
+            dispatch(actions.searchUser(ccNumber));
+        }
+    };
+
+    useEffect(() => {
+        if (!mount) {
+            setMount(true);
+            fetchUsers();
+        }
+        console.log(users);
+    }, [fetchUsers]);
+
+    return (
+        <div className="user-management">
+            <h1>Users List</h1>
+            <SearchBox placeholder="search users" handleChange={searchUsers} />
+            {users && <CardList users={users} />}
+        </div>
+    );
+};
+
+export default UsersGrid;
