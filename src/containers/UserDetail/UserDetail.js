@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ProductItem from 'components/ProductItem';
 import UserInfoPanel from 'components/UserInfoPanel';
 import ProductForm from 'components/ProductForm';
 import ProductModal from 'components/ProductModal';
 import actions from 'redux/actions';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
@@ -35,10 +33,10 @@ const useStyles = makeStyles((theme) => ({
 const UserDetail = () => {
     const history = useHistory();
     const user = useSelector((state) => state.global.user);
-    const products = useSelector((state) => state.global.user.products);
     const dispatch = useDispatch();
     const classes = useStyles();
 
+    const [products, setProducts] = useState([]);
     const [show, setShow] = useState(false);
     const [isAdd, setIsAdd] = useState(true);
     const [productId, setProductId] = useState(0);
@@ -75,6 +73,10 @@ const UserDetail = () => {
         const ccNumber = history.location.pathname.split('/')[2];
         dispatch(actions.getUser(ccNumber));
     }, []);
+
+    useEffect(() => {
+        setProducts(user.products);
+    }, [user]);
 
     if (!user) return null;
 

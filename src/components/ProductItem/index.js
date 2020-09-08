@@ -5,27 +5,51 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 
-const ProductItem = ({ name, cost, handleEdit, handleRemove }) => (
-    <Card variant="outlined">
-        <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-                {name}
-            </Typography>
-            <Typography variant="body2" component="p">
-                {cost}
-            </Typography>
-        </CardContent>
-        <CardActions>
-            <Button variant="primary" onClick={handleEdit} size="small">
-                Edit
-            </Button>
-            <Button variant="warning" onClick={handleRemove} size="small">
-                Remove
-            </Button>
-        </CardActions>
-    </Card>
-);
+const useStyles = makeStyles((theme) => ({
+    details: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+    },
+    content: {
+        minWidth: 250,
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+    },
+}));
+
+const ProductItem = ({ name, cost, handleEdit, handleRemove }) => {
+    const classes = useStyles();
+    return (
+        <Card variant="outlined">
+            <div className={classes.details}>
+                <CardContent className={classes.content}>
+                    <Typography color="textSecondary">{name}</Typography>
+                    <Typography color="textSecondary">{cost}</Typography>
+                </CardContent>
+                <CardActions>
+                    <Button
+                        variant="outlined"
+                        onClick={handleEdit}
+                        size="small"
+                    >
+                        Edit
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        onClick={handleRemove}
+                        size="small"
+                    >
+                        Remove
+                    </Button>
+                </CardActions>
+            </div>
+        </Card>
+    );
+};
 
 ProductItem.propTypes = {
     name: PropTypes.string,

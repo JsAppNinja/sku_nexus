@@ -10,7 +10,13 @@ const initialState = {
         ccNumber: '',
         ccType: '',
         cost: 0,
-        products: [],
+        products: [
+            {
+                id: '1231',
+                name: 'ProductA',
+                cost: 212,
+            },
+        ],
     },
 };
 
@@ -41,7 +47,11 @@ function appReducer(state = initialState, action) {
             let searchedData = {};
             DummyData.forEach((item) => {
                 if (item.cc_number === action.payload) {
-                    searchedData = { ...item, cost: 0 };
+                    searchedData = {
+                        ...item,
+                        cost: 0,
+                        products: state.user.products,
+                    };
                 }
             });
             return {
