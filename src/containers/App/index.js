@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
+import { ConfirmProvider } from 'material-ui-confirm';
 import routes from './routes';
 
 import 'styles/app.css';
@@ -16,7 +17,7 @@ const App = () => (
                 <meta name="description" content="User Management" />
                 <title>User Management</title>
             </Helmet>
-            {routes()}
+            <ConfirmProvider>{routes()}</ConfirmProvider>
         </Box>
     </MuiThemeProvider>
 );

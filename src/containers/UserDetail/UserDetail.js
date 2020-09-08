@@ -13,6 +13,7 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { useConfirm } from 'material-ui-confirm';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,6 +36,7 @@ const UserDetail = () => {
     const user = useSelector((state) => state.global.user);
     const dispatch = useDispatch();
     const classes = useStyles();
+    const confirm = useConfirm();
 
     const [products, setProducts] = useState([]);
     const [show, setShow] = useState(false);
@@ -67,7 +69,13 @@ const UserDetail = () => {
         dispatch(actions.editProduct(id, name, cost));
     };
 
-    const handleRemoveProduct = (id) => () => {};
+    const handleRemoveProduct = (id) => {
+        confirm({
+            description: `This product will be permanently deleted.`,
+        }).then(() => {
+            dispatch(actions.removeProduct(id));
+        });
+    };
 
     useEffect(() => {
         const ccNumber = history.location.pathname.split('/')[2];
@@ -130,7 +138,9 @@ const UserDetail = () => {
                                         item.name,
                                         item.cost,
                                     )}
-                                    handleRemove={handleRemoveProduct(item.id)}
+                                    handleRemove={() =>
+                                        handleRemoveProduct(item.id)
+                                    }
                                 />
                             ))}
                     </Grid>
