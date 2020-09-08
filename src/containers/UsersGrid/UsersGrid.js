@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import actions from 'redux/actions';
-import UserList from 'components/UserList';
-import SearchBox from 'components/SearchBox';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+
+import { useDispatch, useSelector } from 'react-redux';
+import actions from 'redux/actions';
+
+import Container from 'components/common/Container';
+import UserList from 'components/custom/UserList';
+import SearchBox from 'components/common/SearchBox';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,7 +26,6 @@ const UsersGrid = () => {
     const users = useSelector((state) => state.global.users);
     const searchResult = useSelector((state) => state.global.searchResult);
     const dispatch = useDispatch();
-    const [selected, setSelected] = useState([]);
     const { getAllUsers, searchUser } = actions;
 
     const searchUsers = (e) => {
@@ -38,10 +40,10 @@ const UsersGrid = () => {
 
     useEffect(() => {
         dispatch(getAllUsers());
-    }, []);
+    });
 
     return (
-        <div className={classes.root}>
+        <Container className={classes.root}>
             <Grid container spacing={3} justify="flex-end" alignItems="center">
                 <Grid item xs={5}>
                     <Grid
@@ -72,7 +74,7 @@ const UsersGrid = () => {
                     </Grid>
                 </Grid>
             </Grid>
-        </div>
+        </Container>
     );
 };
 

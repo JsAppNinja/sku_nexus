@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import actions from 'redux/actions';
 
 import Button from '@material-ui/core/Button';
-import ProductItem from 'components/ProductItem';
-import UserInfoPanel from 'components/UserInfoPanel';
-import ProductForm from 'components/ProductForm';
-import ProductModal from 'components/ProductModal';
-import actions from 'redux/actions';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useConfirm } from 'material-ui-confirm';
+import { Paper } from '@material-ui/core';
+
+import Container from 'components/common/Container';
+import ProductItem from 'components/custom/ProductItem';
+import UserInfoPanel from 'components/custom/UserInfoPanel';
+import ProductForm from 'components/forms/ProductForm';
+import ProductModal from 'components/modals/ProductModal';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(2),
         color: theme.palette.text.secondary,
+        minHeight: 120,
+        border: '1px solid grey',
     },
 }));
 
@@ -44,26 +49,24 @@ const UserDetail = () => {
     const confirm = useConfirm();
 
     const [products, setProducts] = useState([]);
+    const [currentProduct, setCurrentProduct] = useState({
+        id: 0,
+        name: '',
+        cost: 0,
+    });
     const [show, setShow] = useState(false);
     const [isAdd, setIsAdd] = useState(true);
-    const [productId, setProductId] = useState(0);
-    const [productName, setProductName] = useState('');
-    const [productCost, setProductCost] = useState(0);
 
-    const handleClose = () => setShow(false);
+    const onClose = () => setShow(false);
     const showAddModal = () => {
         setShow(true);
         setIsAdd(true);
-        setProductId(0);
-        setProductName('');
-        setProductCost(0);
+        setCurrentProduct({ id: 0, name: '', cost: 0 });
     };
     const showEditModal = (id, name, cost) => () => {
         setShow(true);
         setIsAdd(false);
-        setProductId(id);
-        setProductName(name);
-        setProductCost(cost);
+        setCurrentProduct({ id, name, cost });
     };
 
     const handleAddProduct = (name, cost) => {
@@ -86,7 +89,7 @@ const UserDetail = () => {
         dispatch(actions.getAllUsers());
         const ccNumber = history.location.pathname.split('/')[2];
         dispatch(actions.getUser(ccNumber));
-    }, []);
+    });
 
     useEffect(() => {
         setProducts(user.products);
@@ -95,7 +98,7 @@ const UserDetail = () => {
     if (!user) return null;
 
     return (
-        <div className={classes.root}>
+        <Container className={classes.root}>
             <Grid container spacing={3} justify="center" alignItems="center">
                 <Grid item xs={9}>
                     <Grid container spacing={3} direction="row">
@@ -135,38 +138,45 @@ const UserDetail = () => {
                 </Grid>
                 <Grid item xs={9}>
                     <Grid container spacing={3} direction="column">
-                        {products &&
-                            products.map((item) => (
-                                <ProductItem
-                                    key={item.id}
-                                    className="my-2"
-                                    name={item.name}
-                                    cost={item.cost}
-                                    handleEdit={showEditModal(
-                                        item.id,
-                                        item.name,
-                                        item.cost,
-                                    )}
-                                    handleRemove={() =>
-                                        handleRemoveProduct(item.id)
-                                    }
-                                />
-                            ))}
+                        <Paper className={classes.paper}>
+                            {products.length < 1 ? (
+                                <Typography>
+                                    The product list is empty
+                                </Typography>
+                            ) : (
+                                products.map((item) => (
+                                    <ProductItem
+                                        key={item.id}
+                                        className="my-2"
+                                        name={item.name}
+                                        cost={item.cost}
+                                        handleEdit={showEditModal(
+                                            item.id,
+                                            item.name,
+                                            item.cost,
+                                        )}
+                                        handleRemove={() =>
+                                            handleRemoveProduct(item.id)
+                                        }
+                                    />
+                                ))
+                            )}
+                        </Paper>
                     </Grid>
                 </Grid>
             </Grid>
-            <ProductModal show={show} onHide={handleClose}>
+            <ProductModal show={show} onHide={onClose}>
                 <ProductForm
-                    id={productId}
-                    name={productName}
-                    cost={productCost}
+                    id={currentProduct.id}
+                    name={currentProduct.name}
+                    cost={currentProduct.cost}
                     isAdd={isAdd}
                     handleAddProduct={handleAddProduct}
                     handleEditProduct={handleEditProduct}
-                    handleClose={handleClose}
+                    handleClose={onClose}
                 />
             </ProductModal>
-        </div>
+        </Container>
     );
 };
 
