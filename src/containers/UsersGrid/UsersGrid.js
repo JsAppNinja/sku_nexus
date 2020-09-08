@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'redux/actions';
-import CardList from 'components/CardList';
+import UserList from 'components/UserList';
 import SearchBox from 'components/SearchBox';
 
 import './styles.css';
@@ -36,7 +36,7 @@ const UsersGrid = () => {
     return (
         <div className="user-management">
             <SearchBox placeholder="search users" handleChange={searchUsers} />
-            {users && <CardList users={users} />}
+            {users && <UserList users={users} />}
         </div>
     );
 };

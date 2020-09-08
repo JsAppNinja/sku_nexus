@@ -1,15 +1,15 @@
 import React from 'react';
-import Card from 'components/Card';
+import UserItem from 'components/UserItem';
 import './styles.css';
 
-const CardList = ({ users }) => {
+const UserList = ({ users }) => {
     return (
         <div className="card-list">
             {users.map((user) => (
-                <Card key={user.id} user={user} />
+                <UserItem key={user.id} user={user} />
             ))}
         </div>
     );
 };
 
-export default CardList;
+export default UserList;
