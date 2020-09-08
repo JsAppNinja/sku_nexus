@@ -9,12 +9,35 @@ import UserInfoPanel from 'components/UserInfoPanel';
 import ProductForm from 'components/ProductForm';
 import ProductModal from 'components/ProductModal';
 import actions from 'redux/actions';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-function Detail() {
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+        fontFamily: 'sans-serif',
+    },
+    header: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    paper: {
+        padding: theme.spacing(2),
+        color: theme.palette.text.secondary,
+    },
+}));
+
+const UserDetail = () => {
     const history = useHistory();
     const user = useSelector((state) => state.global.user);
     const products = useSelector((state) => state.global.user.products);
     const dispatch = useDispatch();
+    const classes = useStyles();
 
     const [show, setShow] = useState(false);
     const [isAdd, setIsAdd] = useState(true);
@@ -56,41 +79,61 @@ function Detail() {
     if (!user) return null;
 
     return (
-        <div>
-            <Box className="p-3 border-bottom">
-                <h3 className="d-inline pl-4">
-                    {user.first_name} {user.last_name}
-                </h3>
-            </Box>
-
-            <section className="px-3">
-                <UserInfoPanel user={user} className="my-3" />
-            </section>
-
-            <section className="px-3">
-                <Box className="justify-content-between pt-3 pb-1">
-                    <h3 className="pl-3">Products</h3>
-                    <Button variant="outlined" onClick={showAddModal}>
-                        Add
-                    </Button>
-                </Box>
-                {products &&
-                    products.map((item) => (
-                        <ProductItem
-                            key={item.id}
-                            className="my-2"
-                            name={item.name}
-                            cost={item.cost}
-                            handleEdit={showEditModal(
-                                item.id,
-                                item.name,
-                                item.cost,
-                            )}
-                            handleRemove={handleRemoveProduct(item.id)}
-                        />
-                    ))}
-            </section>
-
+        <div className={classes.root}>
+            <Grid container spacing={3} justify="center" alignItems="center">
+                <Grid item xs={9}>
+                    <Grid container spacing={3} direction="row">
+                        <Grid item xs={12}>
+                            <Typography className={classes.header}>
+                                <ArrowBackIcon />
+                                {user.first_name} {user.last_name}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                    <Divider variant="middle" xs={12} />
+                </Grid>
+                <Grid item xs={9}>
+                    <Grid container spacing={3} direction="column">
+                        <Grid item xs={12}>
+                            <UserInfoPanel user={user} className="my-3" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={9}>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="space-between"
+                        alignItems="center"
+                    >
+                        <h2 className="pl-3">Products</h2>
+                        <Button variant="outlined" onClick={showAddModal}>
+                            Add
+                        </Button>
+                    </Grid>
+                </Grid>
+                <Grid item xs={9}>
+                    <Grid container spacing={3} direction="column">
+                        {products &&
+                            products.map((item) => (
+                                <ProductItem
+                                    key={item.id}
+                                    className="my-2"
+                                    name={item.name}
+                                    cost={item.cost}
+                                    handleEdit={showEditModal(
+                                        item.id,
+                                        item.name,
+                                        item.cost,
+                                    )}
+                                    handleRemove={handleRemoveProduct(item.id)}
+                                />
+                            ))}
+                    </Grid>
+                </Grid>
+            </Grid>
             <ProductModal show={show} onHide={handleClose}>
                 <ProductForm
                     id={productId}
@@ -104,6 +147,6 @@ function Detail() {
             </ProductModal>
         </div>
     );
-}
+};
 
-export default Detail;
+export default UserDetail;
