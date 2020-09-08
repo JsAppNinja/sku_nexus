@@ -5,7 +5,25 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 import validationSchema from './schema';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        marginTop: 5,
+    },
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+        minWidth: 250,
+        paddingLeft: 40,
+        paddingRight: 40,
+    },
+    button: {
+        width: '100%',
+        marginTop: 5,
+    },
+}));
 
 const ProductForm = ({
     id,
@@ -16,6 +34,7 @@ const ProductForm = ({
     handleEditProduct,
     handleClose,
 }) => {
+    const classes = useStyles();
     const handleSubmit = async (values) => {
         const { productName, productCost } = values;
         if (isAdd) {
@@ -28,54 +47,63 @@ const ProductForm = ({
     };
 
     return (
-        <Formik
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-            initialValues={{
-                productName: name,
-                productCost: cost,
-            }}
-            render={() => (
-                <Form>
-                    <Field
-                        name="productName"
-                        type="text"
-                        placeholder="Product Name"
-                        render={({ field }) => (
-                            <FormControl margin="normal">
-                                <TextField label="Product Name" {...field} />
-                            </FormControl>
-                        )}
-                    />
-                    <ErrorMessage name="productName" component="div" />
-                    <Field
-                        name="productCost"
-                        type="number"
-                        placeholder="Cost"
-                        render={({ field }) => (
-                            <FormControl margin="normal">
-                                <TextField label="Product Cost" {...field} />
-                            </FormControl>
-                        )}
-                    />
-                    <ErrorMessage name="productCost" component="div" />
-                    <Box
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="space-between"
-                        mt={3}
-                    >
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
+        <div className={classes.root}>
+            <Formik
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+                initialValues={{
+                    productName: name,
+                    productCost: cost,
+                }}
+                render={() => (
+                    <Form className={classes.form}>
+                        <Field
+                            name="productName"
+                            type="text"
+                            placeholder="Product Name"
+                            render={({ field }) => (
+                                <FormControl margin="normal">
+                                    <TextField
+                                        label="Product Name"
+                                        {...field}
+                                    />
+                                </FormControl>
+                            )}
+                        />
+                        <ErrorMessage name="productName" component="div" />
+                        <Field
+                            name="productCost"
+                            type="number"
+                            placeholder="Cost"
+                            render={({ field }) => (
+                                <FormControl margin="normal">
+                                    <TextField
+                                        label="Product Cost"
+                                        {...field}
+                                    />
+                                </FormControl>
+                            )}
+                        />
+                        <ErrorMessage name="productCost" component="div" />
+                        <Box
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="space-between"
+                            mt={3}
                         >
-                            Save
-                        </Button>
-                    </Box>
-                </Form>
-            )}
-        />
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                            >
+                                {isAdd ? 'Add' : 'Edit'}
+                            </Button>
+                        </Box>
+                    </Form>
+                )}
+            />
+        </div>
     );
 };
 

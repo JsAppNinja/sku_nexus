@@ -12,7 +12,7 @@ const initialState = {
         cost: 0,
         products: [
             {
-                id: '1231',
+                id: 1231,
                 name: 'ProductA',
                 cost: 212,
             },

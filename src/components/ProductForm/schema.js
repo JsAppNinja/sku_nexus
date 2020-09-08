@@ -1,6 +1,9 @@
-import { object, string, number } from 'yup';
+import * as Yup from 'yup';
 
-export default object().shape({
-  productName: string().required('Product name is required'),
-  productCost: number().required('Cost is required').positive('Cost must be a positive number'),
+export default Yup.object().shape({
+    productName: Yup.string().required('Product name is required'),
+    productCost: Yup.number()
+        .typeError('Number only')
+        .required('Cost is required')
+        .positive('Cost must be a positive number'),
 });
