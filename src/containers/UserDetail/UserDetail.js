@@ -50,7 +50,7 @@ function Detail() {
 
     useEffect(() => {
         const ccNumber = history.location.pathname.split('/')[2];
-        dispatch(actions.readUser(ccNumber));
+        dispatch(actions.getUser(ccNumber));
     }, []);
 
     if (!user) return null;
@@ -64,20 +64,13 @@ function Detail() {
             </Box>
 
             <section className="px-3">
-                <UserInfoPanel
-                    email={user.email}
-                    ccNumber={user.cc_number}
-                    ccType={user.cc_type}
-                    currency={user.currency}
-                    cost={user.cost}
-                    className="my-3"
-                />
+                <UserInfoPanel user={user} className="my-3" />
             </section>
 
             <section className="px-3">
                 <Box className="justify-content-between pt-3 pb-1">
                     <h3 className="pl-3">Products</h3>
-                    <Button variant="success" onClick={showAddModal}>
+                    <Button variant="outlined" onClick={showAddModal}>
                         Add
                     </Button>
                 </Box>

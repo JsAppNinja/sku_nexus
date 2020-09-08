@@ -35,7 +35,7 @@ const ProductForm = ({
                 productName: name,
                 productCost: cost,
             }}
-            render={
+            render={() => (
                 <Form>
                     <Field
                         name="productName"
@@ -74,7 +74,7 @@ const ProductForm = ({
                         </Button>
                     </Box>
                 </Form>
-            }
+            )}
         />
     );
 };

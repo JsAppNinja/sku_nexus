@@ -2,7 +2,7 @@ import * as CONSTANTS from './constants';
 import DummyData from 'data/dummyData';
 
 const initialState = {
-    userList: DummyData,
+    users: DummyData,
     user: {
         firstName: '',
         lastName: '',
@@ -15,7 +15,6 @@ const initialState = {
 };
 
 function appReducer(state = initialState, action) {
-    console.log('==', state.userList, action.type);
     switch (action.type) {
         case CONSTANTS.GET_USER_DATA:
             return {
@@ -24,7 +23,7 @@ function appReducer(state = initialState, action) {
         case CONSTANTS.GET_ALL_USERS:
             return {
                 ...state,
-                userList: DummyData,
+                users: DummyData,
             };
         case CONSTANTS.SEARCH_USER: {
             const searchedData = [];
@@ -35,14 +34,14 @@ function appReducer(state = initialState, action) {
             });
             return {
                 ...state,
-                userList: searchedData,
+                users: searchedData,
             };
         }
         case CONSTANTS.GET_USER: {
             let searchedData = {};
             DummyData.forEach((item) => {
                 if (item.cc_number === action.payload) {
-                    searchedData = { ...item, total: 0 };
+                    searchedData = { ...item, cost: 0 };
                 }
             });
             return {

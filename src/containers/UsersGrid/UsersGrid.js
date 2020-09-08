@@ -1,42 +1,71 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'redux/actions';
 import UserList from 'components/UserList';
 import SearchBox from 'components/SearchBox';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
-import './styles.css';
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+        fontFamily: 'sans-serif',
+    },
+    paper: {
+        padding: theme.spacing(2),
+        color: theme.palette.text.secondary,
+    },
+}));
 
 const UsersGrid = () => {
-    const [mount, setMount] = useState(false);
-    const users = useSelector((state) => state.global.userList);
+    const classes = useStyles();
+    const users = useSelector((state) => state.global.users);
     const dispatch = useDispatch();
-
-    const fetchUsers = () => {
-        dispatch(actions.getAllUsers());
-    };
+    const { getAllUsers, searchUser } = actions;
 
     const searchUsers = (e) => {
         const ccNumber = e.target.value;
 
         if (ccNumber === '') {
-            dispatch(actions.getAllUsers());
+            dispatch(getAllUsers());
         } else {
-            dispatch(actions.searchUser(ccNumber));
+            dispatch(searchUser(ccNumber));
         }
     };
 
     useEffect(() => {
-        if (!mount) {
-            setMount(true);
-            fetchUsers();
-        }
-        console.log(users);
-    }, [fetchUsers]);
+        dispatch(getAllUsers());
+    }, []);
 
     return (
-        <div className="user-management">
-            <SearchBox placeholder="search users" handleChange={searchUsers} />
-            {users && <UserList users={users} />}
+        <div className={classes.root}>
+            <Grid container spacing={3} justify="flex-end" alignItems="center">
+                <Grid item xs={5}>
+                    <Grid
+                        container
+                        spacing={3}
+                        direction="row"
+                        alignItems="center"
+                    >
+                        <Grid item xs={12}>
+                            <SearchBox
+                                placeholder="search users"
+                                handleChange={searchUsers}
+                            />
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <Paper className={classes.paper}>
+                                {users && <UserList users={users} />}
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
         </div>
     );
 };

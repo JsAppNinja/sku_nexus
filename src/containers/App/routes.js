@@ -1,16 +1,13 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import UsersGrid from 'containers/UsersGrid';
 import UserDetail from 'containers/UserDetail';
 
-const ControlledRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={(props) => <Component {...props} />} />
-);
-
 const routes = () => (
     <Switch>
-        <ControlledRoute path="/" component={UsersGrid} />
-        <ControlledRoute path="/user/:ccNumber" component={UserDetail} />
+        <Route path="/" component={UsersGrid} exact />
+        <Route path="/user/:ccNumber" component={UserDetail} exact />
+        <Route component={() => <Redirect to="/" />} />
     </Switch>
 );
 
