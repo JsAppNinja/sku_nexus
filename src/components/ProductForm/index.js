@@ -38,9 +38,9 @@ const ProductForm = ({
     const handleSubmit = async (values) => {
         const { productName, productCost } = values;
         if (isAdd) {
-            handleAddProduct(productName, productCost);
+            handleAddProduct(productName, Number(productCost));
         } else {
-            handleEditProduct(id, productName, productCost);
+            handleEditProduct(id, productName, Number(productCost));
         }
 
         handleClose();

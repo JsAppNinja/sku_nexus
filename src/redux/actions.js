@@ -1,18 +1,6 @@
 import * as CONSTANTS from './constants';
 
 /**
- * getUserData
- *
- * @return {object} An action object with a type of GET_USER_DATA
- */
-const getUserData = (searchKey) => {
-    return {
-        type: CONSTANTS.GET_USER_DATA,
-        payload: searchKey,
-    };
-};
-
-/**
  * getAllUsers
  *
  * @return {object} An action object with a type of GET_ALL_USERS
@@ -87,7 +75,6 @@ const removeProduct = (ccNumber) => {
 };
 
 export default {
-    getUserData,
     getAllUsers,
     searchUser,
     getUser,

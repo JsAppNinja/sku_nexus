@@ -25,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
+    back: {
+        '&:hover': {
+            cursor: 'pointer',
+        },
+    },
     paper: {
         padding: theme.spacing(2),
         color: theme.palette.text.secondary,
@@ -43,7 +48,7 @@ const UserDetail = () => {
     const [isAdd, setIsAdd] = useState(true);
     const [productId, setProductId] = useState(0);
     const [productName, setProductName] = useState('');
-    const [productCost, setProductCost] = useState();
+    const [productCost, setProductCost] = useState(0);
 
     const handleClose = () => setShow(false);
     const showAddModal = () => {
@@ -51,7 +56,7 @@ const UserDetail = () => {
         setIsAdd(true);
         setProductId(0);
         setProductName('');
-        setProductCost();
+        setProductCost(0);
     };
     const showEditModal = (id, name, cost) => () => {
         setShow(true);
@@ -78,6 +83,7 @@ const UserDetail = () => {
     };
 
     useEffect(() => {
+        dispatch(actions.getAllUsers());
         const ccNumber = history.location.pathname.split('/')[2];
         dispatch(actions.getUser(ccNumber));
     }, []);
@@ -95,7 +101,10 @@ const UserDetail = () => {
                     <Grid container spacing={3} direction="row">
                         <Grid item xs={12}>
                             <Typography className={classes.header}>
-                                <ArrowBackIcon />
+                                <ArrowBackIcon
+                                    onClick={() => history.push('/')}
+                                    className={classes.back}
+                                />
                                 {user.first_name} {user.last_name}
                             </Typography>
                         </Grid>

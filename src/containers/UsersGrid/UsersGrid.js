@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from 'redux/actions';
 import UserList from 'components/UserList';
@@ -21,7 +21,9 @@ const useStyles = makeStyles((theme) => ({
 const UsersGrid = () => {
     const classes = useStyles();
     const users = useSelector((state) => state.global.users);
+    const searchResult = useSelector((state) => state.global.searchResult);
     const dispatch = useDispatch();
+    const [selected, setSelected] = useState([]);
     const { getAllUsers, searchUser } = actions;
 
     const searchUsers = (e) => {
@@ -60,7 +62,11 @@ const UsersGrid = () => {
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Paper className={classes.paper}>
-                                {users && <UserList users={users} />}
+                                {searchResult && searchResult.length > 0 ? (
+                                    <UserList users={searchResult} />
+                                ) : (
+                                    users && <UserList users={users} />
+                                )}
                             </Paper>
                         </Grid>
                     </Grid>

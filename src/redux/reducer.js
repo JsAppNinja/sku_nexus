@@ -2,7 +2,8 @@ import * as CONSTANTS from './constants';
 import DummyData from 'data/dummyData';
 
 const initialState = {
-    users: DummyData,
+    users: [],
+    searchResult: [],
     user: {
         firstName: '',
         lastName: '',
@@ -22,36 +23,39 @@ const initialState = {
 
 function appReducer(state = initialState, action) {
     switch (action.type) {
-        case CONSTANTS.GET_USER_DATA:
-            return {
-                ...state,
-            };
         case CONSTANTS.GET_ALL_USERS:
-            return {
-                ...state,
-                users: DummyData,
-            };
+            if (state.users && state.users.length > 0) {
+                return state;
+            } else {
+                return {
+                    ...state,
+                    users: DummyData.map((user) => {
+                        const products = [];
+                        const newUser = { ...user, cost: 0, products };
+                        return newUser;
+                    }),
+                };
+            }
         case CONSTANTS.SEARCH_USER: {
             const searchedData = [];
-            DummyData.forEach((item) => {
-                if (item.cc_number.includes(action.payload)) {
-                    searchedData.push(item);
-                }
-            });
-            return {
-                ...state,
-                users: searchedData,
-            };
+            if (state.users && state.users.length > 0) {
+                state.users.forEach((user) => {
+                    if (user.cc_number.includes(action.payload)) {
+                        searchedData.push(user);
+                    }
+                });
+                return {
+                    ...state,
+                    searchResult: searchedData,
+                };
+            }
+            return state;
         }
         case CONSTANTS.GET_USER: {
             let searchedData = {};
-            DummyData.forEach((item) => {
+            state.users.forEach((item) => {
                 if (item.cc_number === action.payload) {
-                    searchedData = {
-                        ...item,
-                        cost: 0,
-                        products: state.user.products,
-                    };
+                    searchedData = item;
                 }
             });
             return {
@@ -68,6 +72,16 @@ function appReducer(state = initialState, action) {
             };
             return {
                 ...state,
+                users: state.users.map((user) => {
+                    if (user.cc_number === state.user.cc_number) {
+                        return {
+                            ...user,
+                            cost: user.cost + action.cost,
+                            products: [...user.products, newProduct],
+                        };
+                    }
+                    return user;
+                }),
                 user: {
                     ...state.user,
                     cost: state.user.cost + action.cost,
@@ -92,6 +106,16 @@ function appReducer(state = initialState, action) {
             });
             return {
                 ...state,
+                users: state.users.map((user) => {
+                    if (user.cc_number === state.user.cc_number) {
+                        return {
+                            ...user,
+                            cost: userCost,
+                            products: newProducts,
+                        };
+                    }
+                    return user;
+                }),
                 user: {
                     ...state.user,
                     products: newProducts,
@@ -111,6 +135,16 @@ function appReducer(state = initialState, action) {
 
             return {
                 ...state,
+                users: state.users.map((user) => {
+                    if (user.cc_number === state.user.cc_number) {
+                        return {
+                            ...user,
+                            cost: userCost,
+                            products: newProducts,
+                        };
+                    }
+                    return user;
+                }),
                 user: {
                     ...state.user,
                     products: newProducts,
