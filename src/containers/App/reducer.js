@@ -1,16 +1,13 @@
-import {
-    CALCULATION,
-    CALCULATION_SUCCESS,
-    CALCULATION_ERROR,
-} from './constants';
+import { CALCULATION, GET_USER_DATA } from './constants';
+import DummyData from 'data/dummyData';
 
 const initialState = {
+    users: DummyData,
+    selected: [],
     calculation: {
         submitting: null,
         error: null,
         result: null,
-        leftValue: 0,
-        rightValue: 0,
     },
 };
 
@@ -26,22 +23,10 @@ function appReducer(state = initialState, action) {
                     error: false,
                 },
             };
-        case CALCULATION_SUCCESS:
+        case GET_USER_DATA:
             return {
                 ...state,
-                calculation: {
-                    submitting: false,
-                    error: false,
-                    result,
-                },
-            };
-        case CALCULATION_ERROR:
-            return {
-                ...state,
-                calculation: {
-                    submitting: false,
-                    error,
-                },
+                // users,
             };
         default:
             return state;

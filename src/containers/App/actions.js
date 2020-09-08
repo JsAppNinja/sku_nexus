@@ -1,38 +1,27 @@
-import { toastr } from 'react-redux-toastr';
-import {
-    CALCULATION,
-    CALCULATION_SUCCESS,
-    CALCULATION_ERROR,
-} from './constants';
+import { CALCULATION, GET_USER_DATA } from './constants';
 
 /**
- * Calculation, this action starts the request saga
+ * Calculation
  *
  * @return {object} An action object with a type of CALCULATION
  */
-export function calculation(leftValue, operator, rightValue) {
+export function calculation(value) {
     return {
         type: CALCULATION,
         payload: {
-            leftValue,
-            operator,
-            rightValue,
+            value,
         },
     };
 }
 
-export function calculationSucceeded(result) {
+/**
+ * getUserData
+ *
+ * @return {object} An action object with a type of GET_USER_DATA
+ */
+export function getUserData(searchKey) {
     return {
-        type: CALCULATION_SUCCESS,
-        payload: { result },
-    };
-}
-
-export function calculationFailed(error) {
-    toastr.error(error.message);
-
-    return {
-        type: CALCULATION_ERROR,
-        payload: { error },
+        type: GET_USER_DATA,
+        payload: { searchKey },
     };
 }
