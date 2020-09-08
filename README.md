@@ -1,4 +1,4 @@
-# Calculation Application
+# React Test Assessment
 
 ## Prerequisites
 
@@ -17,10 +17,6 @@ npm start (Or yarn start)
 
 ## Description
 
-This application was built with React, Redux, Redux Saga, and Express.js.
-
-Express back-end provides RESTful APIs for check-conversion.
-
-Front-end React consumes the apis for clients, realtors, and admins.
+This application was built with React, Redux, Material UI.
 
 No focus on magnificent CSS styling because it's not top priority in this project.
