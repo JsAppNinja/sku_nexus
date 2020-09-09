@@ -20,14 +20,7 @@ const UserItem = (props) => {
                 <p>{props.user.cc_number}</p>
                 <p>{props.user.cc_type}</p>
             </section>
-            <button onClick={onDetailClick}>
-                {/* <a
-                    href={`/user/${props.user.cc_number}`}
-                    className="d-block w-100 text-uppercase"
-                > */}
-                Details
-                {/* </a> */}
-            </button>
+            <button onClick={onDetailClick}>Details</button>
         </div>
     );
 };

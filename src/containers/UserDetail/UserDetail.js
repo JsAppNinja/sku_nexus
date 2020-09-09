@@ -55,17 +55,17 @@ const UserDetail = () => {
         cost: 0,
     });
     const [show, setShow] = useState(false);
-    const [isAdd, setIsAdd] = useState(true);
+    const [toggleForm, setAddForm] = useState(true);
 
     const onClose = () => setShow(false);
     const showAddModal = () => {
         setShow(true);
-        setIsAdd(true);
+        setAddForm(true);
         setCurrentProduct({ id: 0, name: '', cost: 0 });
     };
     const showEditModal = (id, name, cost) => () => {
         setShow(true);
-        setIsAdd(false);
+        setAddForm(false);
         setCurrentProduct({ id, name, cost });
     };
 
@@ -167,13 +167,13 @@ const UserDetail = () => {
             </Grid>
             <ProductModal show={show} onHide={onClose}>
                 <ProductForm
-                    id={currentProduct.id}
-                    name={currentProduct.name}
-                    cost={currentProduct.cost}
-                    isAdd={isAdd}
-                    handleAddProduct={handleAddProduct}
-                    handleEditProduct={handleEditProduct}
-                    handleClose={onClose}
+                    productId={currentProduct.id}
+                    productName={currentProduct.name}
+                    productCost={currentProduct.cost}
+                    isAddForm={toggleForm}
+                    productAddHandler={handleAddProduct}
+                    productEditHandler={handleEditProduct}
+                    onClose={onClose}
                 />
             </ProductModal>
         </Container>

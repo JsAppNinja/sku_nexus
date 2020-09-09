@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
+
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+
 import validationSchema from './schema';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,24 +28,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductForm = ({
-    id,
-    name,
-    cost,
-    isAdd,
-    handleAddProduct,
-    handleEditProduct,
-    handleClose,
+    productId,
+    productName,
+    productCost,
+    isAddForm,
+    productAddHandler,
+    productEditHandler,
+    onClose,
 }) => {
     const classes = useStyles();
     const handleSubmit = async (values) => {
         const { productName, productCost } = values;
-        if (isAdd) {
-            handleAddProduct(productName, Number(productCost));
+        if (isAddForm) {
+            productAddHandler(productName, Number(productCost));
         } else {
-            handleEditProduct(id, productName, Number(productCost));
+            productEditHandler(productId, productName, Number(productCost));
         }
 
-        handleClose();
+        onClose();
     };
 
     return (
@@ -52,8 +54,8 @@ const ProductForm = ({
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
                 initialValues={{
-                    productName: name,
-                    productCost: cost,
+                    productName: productName,
+                    productCost: productCost,
                 }}
                 render={() => (
                     <Form className={classes.form}>
@@ -97,7 +99,7 @@ const ProductForm = ({
                                 color="primary"
                                 className={classes.button}
                             >
-                                {isAdd ? 'Add' : 'Edit'}
+                                {isAddForm ? 'Add' : 'Edit'}
                             </Button>
                         </Box>
                     </Form>
@@ -108,23 +110,23 @@ const ProductForm = ({
 };
 
 ProductForm.propTypes = {
-    id: PropTypes.number,
-    name: PropTypes.string,
-    cost: PropTypes.number,
-    isAdd: PropTypes.bool,
-    handleAddProduct: PropTypes.func,
-    handleEditProduct: PropTypes.func,
-    handleClose: PropTypes.func,
+    productId: PropTypes.number,
+    productName: PropTypes.string,
+    productCost: PropTypes.number,
+    isAddForm: PropTypes.bool,
+    productAddHandler: PropTypes.func,
+    productEditHandler: PropTypes.func,
+    onClose: PropTypes.func,
 };
 
 ProductForm.defaultProps = {
-    id: 0,
-    name: '',
-    cost: 0,
-    isAdd: true,
-    handleAddProduct: () => {},
-    handleEditProduct: () => {},
-    handleClose: () => {},
+    productId: 0,
+    productName: '',
+    productCost: 0,
+    productCost: true,
+    productAddHandler: () => {},
+    productEditHandler: () => {},
+    onClose: () => {},
 };
 
 export default ProductForm;
