@@ -27,7 +27,7 @@ function appReducer(state = initialState, action) {
             if (state.users && state.users.length > 0) {
                 return state;
             } else {
-                // const storage = localStorage.getItem('users');
+                const storage = localStorage.getItem('users');
                 const newState = {
                     ...state,
                     users: DummyData.map((user) => {

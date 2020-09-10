@@ -123,7 +123,7 @@ ProductForm.defaultProps = {
     productId: 0,
     productName: '',
     productCost: 0,
-    productCost: true,
+    isAddForm: true,
     productAddHandler: () => {},
     productEditHandler: () => {},
     onClose: () => {},
