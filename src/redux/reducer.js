@@ -36,16 +36,16 @@ function appReducer(state = initialState, action) {
                         return newUser;
                     }),
                 };
-                return newState;
-                // if (!storage) return newState;
-                // if (JSON.parse(storage)) {
-                //     return {
-                //         ...newState,
-                //         users: JSON.parse(storage),
-                //     };
-                // }
+                // return newState;
+                if (!storage) return newState;
+                if (JSON.parse(storage)) {
+                    return {
+                        ...newState,
+                        users: JSON.parse(storage),
+                    };
+                }
             }
-        // break;
+            break;
         case CONSTANTS.SEARCH_USER: {
             const searchedData = [];
             if (state.users && state.users.length > 0) {
@@ -90,7 +90,7 @@ function appReducer(state = initialState, action) {
                 }
                 return user;
             });
-            // localStorage.setItem('users', JSON.stringify(newUsers));
+            localStorage.setItem('users', JSON.stringify(newUsers));
             return {
                 ...state,
                 users: newUsers,
@@ -126,7 +126,7 @@ function appReducer(state = initialState, action) {
                 }
                 return user;
             });
-            // localStorage.setItem('users', JSON.stringify(newUsers));
+            localStorage.setItem('users', JSON.stringify(newUsers));
             return {
                 ...state,
                 users: newUsers,
@@ -156,7 +156,7 @@ function appReducer(state = initialState, action) {
                 }
                 return user;
             });
-            // localStorage.setItem('users', JSON.stringify(newUsers));
+            localStorage.setItem('users', JSON.stringify(newUsers));
             return {
                 ...state,
                 users: newUsers,
